@@ -135,14 +135,6 @@ Released separately — see the repository's release page. Weights are not store
 ## Citation
 
 ```bibtex
-@inproceedings{kataria2027flashswin,
-  title     = {FlashSwin: Unlocking Large Windows and Dense Tokens in Swin Vision
-               Transformers with Memory Efficient Attention},
-  author    = {Kataria, Tushar and Sabin, Gerald and Sadayappan, Ponnuswamy
-               and Elhabian, Shireen Y.},
-  booktitle = {IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
-  year      = {2027}
-}
 ```
 
 ## License and attribution
