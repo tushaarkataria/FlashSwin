@@ -2,8 +2,7 @@
 
 **Unlocking Large Windows and Dense Tokens in Swin Vision Transformers with Memory Efficient Attention**
 
-Tushar Kataria, Gerald Sabin, Ponnuswamy Sadayappan, Shireen Y. Elhabian
-Scientific Computing and Imaging Institute & Kahlert School of Computing, University of Utah · RNET Technologies
+[Paper Link]()
 
 Standard windowed attention materialises an `M² × M²` score matrix per window, costing `O(M⁴)`
 memory, and Swin's learned relative-position bias is added elementwise to that matrix — so the
