@@ -1,0 +1,11 @@
+DATA:
+  IMG_SIZE: 256
+MODEL:
+  TYPE: flash_swin
+  NAME: flash_swin_tiny_patch4_window16_256
+  DROP_PATH_RATE: 0.2
+  FlashSWIN:
+    EMBED_DIM: 96
+    DEPTHS: [ 2, 2, 6, 2 ]
+    NUM_HEADS: [ 3, 6, 12, 24 ]
+    WINDOW_SIZE: 16

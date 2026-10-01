@@ -1,0 +1,29 @@
+# FlashSwin-L — IN-22K SUPERVISED pretrain. patch2 / img192 / window32.
+# The SMALL-PATCH argument: this is the CONTROLLED ablation vs SwinV2-L, which
+# pretrains at patch4/img192. Same image resolution (192), only the patch differs
+# (2 vs 4) -> isolates the contribution of finer patching. 192/2 = 96 -> 96x96
+# stage-1 grid = 4x SwinV2-L's 48x48, via smaller patches (not higher res).
+#
+# Pair with patch2/img512 fine-tune (patch_embed [192,3,3,3] consistent).
+# Same ~197M arch as the patch4/384 variant; only PATCH_SIZE + IMG_SIZE change.
+DATA:
+  DATASET: imagenet22K
+  IMG_SIZE: 192
+MODEL:
+  TYPE: flash_swin
+  NAME: flash_swin_large_patch2_window32_192_22k
+  DROP_PATH_RATE: 0.2
+  FlashSWIN:
+    PATCH_SIZE: 2
+    EMBED_DIM: 192
+    DEPTHS: [ 2, 2, 18, 2 ]
+    NUM_HEADS: [ 6, 12, 24, 48 ]
+    WINDOW_SIZE: 24
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-4
+  WARMUP_LR: 1.25e-7
+  MIN_LR: 1.25e-6
+  USE_CHECKPOINT: True

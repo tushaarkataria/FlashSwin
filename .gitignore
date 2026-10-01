@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*.so
+*.pth
+*.csv
+output/
+work_dirs/
+.DS_Store

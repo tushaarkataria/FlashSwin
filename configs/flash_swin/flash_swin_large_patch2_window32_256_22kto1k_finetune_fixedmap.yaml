@@ -1,0 +1,42 @@
+# FlashSwin-L -- Stage 2: IN-22K -> IN-1K FINE-TUNE. patch2 / img256 / window32.
+# RE-RUN of flash_swin_large_patch2_window32_256_22kto1k_finetune.yaml with the
+# CORRECTED 22k->1k class map.
+#
+# WHY: the shipped data/map22kto1k.txt is built for Microsoft's 21843-class convention,
+# but our IN-22K copy labels classes in plain sorted-21841 order. They agree for the
+# first 717 IN-1K classes then drift by one (later two) -- 281/1000 slots differ.
+# The original run therefore began with ~28% of its classifier rows scrambled.
+# Measured on this exact checkpoint (zero-shot IN-1K, img256/w32):
+#     shipped map  -> 64.96% top-1 / 77.61% top-5
+#     local  map   -> 83.04% top-1 / 96.78% top-5     (+18.08)
+# The original finetune still reached 86.71% by re-learning the head over 30 epochs;
+# this run starts from a correct head instead of spending early epochs repairing it.
+#
+# Everything else is IDENTICAL to the original config so the comparison is clean:
+# same pretrain ckpt, same 30 epochs / 5 warmup / WD 1e-8 / BASE_LR 1e-5, same
+# drop_path, same USE_CHECKPOINT.
+DATA:
+  DATASET: imagenet          # 1k -> NUM_CLASSES=1000 (head remapped from 22k)
+  IMG_SIZE: 256
+MODEL:
+  TYPE: flash_swin
+  NAME: flash_swin_large_patch2_window32_256_22kto1k_finetune_fixedmap
+  DROP_PATH_RATE: 0.2
+  PRETRAINED: '/path/to/scratch'
+  MAP22KTO1K: 'data/map22kto1k_local.txt'   # <-- the fix
+  FlashSWIN:
+    PATCH_SIZE: 2
+    EMBED_DIM: 192
+    DEPTHS: [ 2, 2, 18, 2 ]
+    NUM_HEADS: [ 6, 12, 24, 48 ]
+    WINDOW_SIZE: 32
+TRAIN:
+  EPOCHS: 30
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 1e-8
+  BASE_LR: 1e-5              # actual LR = 1e-5 when effective batch == 512
+  WARMUP_LR: 1e-8
+  MIN_LR: 1e-7
+  USE_CHECKPOINT: True
+TEST:
+  CROP: False
