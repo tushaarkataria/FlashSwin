@@ -129,7 +129,7 @@ how mIoU is reported.
 
 ## Checkpoints
 
-Released separately — see the repository's release page. Weights are not stored in this repo.
+Released separately — see the repository's release page. Weights are not stored in this repo. Will be released at acceptance of the manuscript.
 
 ## Citation
 
