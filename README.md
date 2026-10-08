@@ -2,7 +2,7 @@
 
 **Unlocking Large Windows and Dense Tokens in Swin Vision Transformers with Memory Efficient Attention**
 
-[Paper Link]()
+[Paper Link](https://arxiv.org/abs/2610.04664)
 
 Standard windowed attention materialises an `M² × M²` score matrix per window, costing `O(M⁴)`
 memory, and Swin's learned relative-position bias is added elementwise to that matrix — so the
